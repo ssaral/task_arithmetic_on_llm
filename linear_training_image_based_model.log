@@ -1,0 +1,80 @@
+====================================================================================================
+Finetuning ViT-B-32 on MNIST
+====================================================================================================
+Using linearized fine-tuning.
+Using linearized fine-tuning.
+Building image encoder.
+Building image encoder.
+Loading ViT-B-32 pre-trained weights.
+Loading ViT-B-32 pre-trained weights.
+Classification head for ViT-B-32 on MNISTVal exists at checkpoints/ViT-B-32/head_MNISTVal.pt
+Loading classification head from checkpoints/ViT-B-32/head_MNISTVal.pt
+Classification head for ViT-B-32 on MNISTVal exists at checkpoints/ViT-B-32/head_MNISTVal.pt
+Loading classification head from checkpoints/ViT-B-32/head_MNISTVal.pt
+Train Epoch: 0 [0% 0/430]       Loss: 1.992712  Data (t) 0.033  Batch (t) 3.213
+Train Epoch: 0 [23% 100/430]    Loss: 0.647176  Data (t) 0.011  Batch (t) 0.365
+Train Epoch: 0 [47% 200/430]    Loss: 0.253422  Data (t) 0.012  Batch (t) 0.350
+Train Epoch: 0 [70% 300/430]    Loss: 0.190225  Data (t) 0.009  Batch (t) 0.361
+Train Epoch: 0 [93% 400/430]    Loss: 0.103261  Data (t) 0.017  Batch (t) 0.363
+^[[CTrain Epoch: 1 [16% 70/430] Loss: 0.065886  Data (t) 0.010  Batch (t) 0.353
+Train Epoch: 1 [40% 170/430]    Loss: 0.141296  Data (t) 0.010  Batch (t) 0.355
+Train Epoch: 1 [63% 270/430]    Loss: 0.100428  Data (t) 0.010  Batch (t) 0.355
+Train Epoch: 1 [86% 370/430]    Loss: 0.045044  Data (t) 0.010  Batch (t) 0.356
+Train Epoch: 2 [9% 40/430]      Loss: 0.089321  Data (t) 0.019  Batch (t) 0.361
+Train Epoch: 2 [33% 140/430]    Loss: 0.072282  Data (t) 0.007  Batch (t) 0.344
+Train Epoch: 2 [56% 240/430]    Loss: 0.068986  Data (t) 0.008  Batch (t) 0.355
+Train Epoch: 2 [79% 340/430]    Loss: 0.054582  Data (t) 0.008  Batch (t) 0.359
+Train Epoch: 3 [2% 10/430]      Loss: 0.051726  Data (t) 0.011  Batch (t) 0.343
+Train Epoch: 3 [26% 110/430]    Loss: 0.064509  Data (t) 0.010  Batch (t) 0.355
+Train Epoch: 3 [49% 210/430]    Loss: 0.026733  Data (t) 0.011  Batch (t) 0.355
+Train Epoch: 3 [72% 310/430]    Loss: 0.039795  Data (t) 0.007  Batch (t) 0.352
+Train Epoch: 3 [95% 410/430]    Loss: 0.035347  Data (t) 0.007  Batch (t) 0.360
+Train Epoch: 4 [19% 80/430]     Loss: 0.044237  Data (t) 0.011  Batch (t) 0.355
+Train Epoch: 4 [42% 180/430]    Loss: 0.016524  Data (t) 0.010  Batch (t) 0.356
+Train Epoch: 4 [65% 280/430]    Loss: 0.084860  Data (t) 0.011  Batch (t) 0.355
+Train Epoch: 4 [88% 380/430]    Loss: 0.020091  Data (t) 0.011  Batch (t) 0.357
+Classification head for ViT-B-32 on MNISTVal exists at checkpoints/ViT-B-32/head_MNISTVal.pt
+Loading classification head from checkpoints/ViT-B-32/head_MNISTVal.pt
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [00:17<00:00,  2.29it/s]
+Done evaluating on MNISTVal. Accuracy: 99.42%
+====================================================================================================
+Finetuning ViT-B-32 on CIFAR10
+====================================================================================================
+Using linearized fine-tuning.
+Using linearized fine-tuning.
+Building image encoder.
+Building image encoder.
+Loading ViT-B-32 pre-trained weights.
+Loading ViT-B-32 pre-trained weights.
+Classification head for ViT-B-32 on CIFAR10Val exists at checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Loading classification head from checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Classification head for ViT-B-32 on CIFAR10Val exists at checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Loading classification head from checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Train Epoch: 0 [0% 0/352]       Loss: 0.341946  Data (t) 0.028  Batch (t) 4.578
+Train Epoch: 0 [28% 100/352]    Loss: 0.167718  Data (t) 0.007  Batch (t) 0.362
+Train Epoch: 0 [57% 200/352]    Loss: 0.398816  Data (t) 0.007  Batch (t) 0.357
+Train Epoch: 0 [85% 300/352]    Loss: 0.139807  Data (t) 0.008  Batch (t) 0.356
+Train Epoch: 1 [14% 48/352]     Loss: 0.036926  Data (t) 0.013  Batch (t) 0.354
+Train Epoch: 1 [42% 148/352]    Loss: 0.186075  Data (t) 0.009  Batch (t) 0.361
+Train Epoch: 1 [70% 248/352]    Loss: 0.073696  Data (t) 0.007  Batch (t) 0.358
+Train Epoch: 1 [99% 348/352]    Loss: 0.052439  Data (t) 0.008  Batch (t) 0.356
+Train Epoch: 2 [27% 96/352]     Loss: 0.029724  Data (t) 0.009  Batch (t) 0.358
+Train Epoch: 2 [56% 196/352]    Loss: 0.160465  Data (t) 0.009  Batch (t) 0.363
+Train Epoch: 2 [84% 296/352]    Loss: 0.008901  Data (t) 0.010  Batch (t) 0.357
+Train Epoch: 3 [12% 44/352]     Loss: 0.046381  Data (t) 0.007  Batch (t) 0.347
+Train Epoch: 3 [41% 144/352]    Loss: 0.095995  Data (t) 0.011  Batch (t) 0.355
+Train Epoch: 3 [69% 244/352]    Loss: 0.082482  Data (t) 0.011  Batch (t) 0.356
+Train Epoch: 3 [98% 344/352]    Loss: 0.041952  Data (t) 0.010  Batch (t) 0.355
+Train Epoch: 4 [26% 92/352]     Loss: 0.006931  Data (t) 0.007  Batch (t) 0.349
+Train Epoch: 4 [55% 192/352]    Loss: 0.042730  Data (t) 0.010  Batch (t) 0.355
+Train Epoch: 4 [83% 292/352]    Loss: 0.025309  Data (t) 0.011  Batch (t) 0.356
+Classification head for ViT-B-32 on CIFAR10Val exists at checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Loading classification head from checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Files already downloaded and verified
+Files already downloaded and verified
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [01:04<00:00,  1.61s/it]
+Done evaluating on CIFAR10Val. Accuracy: 96.16%

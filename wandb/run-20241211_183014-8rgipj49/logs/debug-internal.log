@@ -1,0 +1,16 @@
+{"time":"2024-12-11T18:30:14.137133573+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T18:30:14.137161891+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_183014-8rgipj49/logs/debug-core.log"}
+{"time":"2024-12-11T18:30:17.673068471+05:30","level":"INFO","msg":"created new stream","id":"8rgipj49"}
+{"time":"2024-12-11T18:30:17.673135876+05:30","level":"INFO","msg":"stream: started","id":"8rgipj49"}
+{"time":"2024-12-11T18:30:17.673167479+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:30:17.673254504+05:30","level":"INFO","msg":"handler: started","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:30:17.673352196+05:30","level":"INFO","msg":"sender: started","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:30:18.113014368+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-11T18:58:11.719118636+05:30","level":"INFO","msg":"stream: closing","id":"8rgipj49"}
+{"time":"2024-12-11T18:58:11.719174153+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-11T18:58:11.720111767+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-11T18:58:12.814514369+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-11T18:58:13.138807524+05:30","level":"INFO","msg":"handler: closed","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:58:13.138892255+05:30","level":"INFO","msg":"sender: closed","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:58:13.138877389+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"8rgipj49"}
+{"time":"2024-12-11T18:58:13.139015508+05:30","level":"INFO","msg":"stream: closed","id":"8rgipj49"}

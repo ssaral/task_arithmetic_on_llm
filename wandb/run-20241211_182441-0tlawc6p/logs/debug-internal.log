@@ -1,0 +1,16 @@
+{"time":"2024-12-11T18:24:41.352968454+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T18:24:41.352995021+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_182441-0tlawc6p/logs/debug-core.log"}
+{"time":"2024-12-11T18:24:44.888914044+05:30","level":"INFO","msg":"created new stream","id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:44.888991504+05:30","level":"INFO","msg":"stream: started","id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:44.889079081+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:44.889140451+05:30","level":"INFO","msg":"handler: started","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:44.889218941+05:30","level":"INFO","msg":"sender: started","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:45.32087585+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-11T18:24:48.821234017+05:30","level":"INFO","msg":"stream: closing","id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:48.821351305+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-11T18:24:48.822355249+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-11T18:24:49.859732787+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-11T18:24:50.199638913+05:30","level":"INFO","msg":"handler: closed","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:50.199726456+05:30","level":"INFO","msg":"sender: closed","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:50.199713765+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"0tlawc6p"}
+{"time":"2024-12-11T18:24:50.199843141+05:30","level":"INFO","msg":"stream: closed","id":"0tlawc6p"}

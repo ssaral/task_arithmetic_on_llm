@@ -1,0 +1,17 @@
+tokenizer_config.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 48.0/48.0 [00:00<00:00, 132kB/s]
+vocab.txt: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 232k/232k [00:00<00:00, 608kB/s]
+tokenizer.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 466k/466k [00:00<00:00, 1.27MB/s]
+Traceback (most recent call last):
+  File "/mnt/ss/text_based_implementation/non_linear_sentiment_bert.py", line 47, in <module>
+    tokenize_function("data/sst2/train.jsonl", "sst2_tokenized_train.json")
+  File "/mnt/ss/text_based_implementation/non_linear_sentiment_bert.py", line 39, in tokenize_function
+    tokens = tokenizer(data["sentence"], truncation=True, padding="max_length", max_length=512)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2860, in __call__
+    encodings = self._call_one(text=text, text_pair=text_pair, **all_kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2970, in _call_one
+    return self.encode_plus(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 3037, in encode_plus
+    padding_strategy, truncation_strategy, max_length, kwargs = self._get_padding_truncation_strategies(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2762, in _get_padding_truncation_strategies
+    raise ValueError(
+ValueError: Asking to pad but the tokenizer does not have a padding token. Please select a token to use as `pad_token` `(tokenizer.pad_token = tokenizer.eos_token e.g.)` or add a new pad token via `tokenizer.add_special_tokens({'pad_token': '[PAD]'})`.

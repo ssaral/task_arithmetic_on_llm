@@ -1,0 +1,16 @@
+{"time":"2024-12-11T18:26:34.94274801+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T18:26:34.942776217+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_182634-ylyektdp/logs/debug-core.log"}
+{"time":"2024-12-11T18:26:38.678869822+05:30","level":"INFO","msg":"created new stream","id":"ylyektdp"}
+{"time":"2024-12-11T18:26:38.678998167+05:30","level":"INFO","msg":"stream: started","id":"ylyektdp"}
+{"time":"2024-12-11T18:26:38.679784305+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:38.6798415+05:30","level":"INFO","msg":"handler: started","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:38.679785436+05:30","level":"INFO","msg":"sender: started","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:39.1122705+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-11T18:26:39.497945673+05:30","level":"INFO","msg":"stream: closing","id":"ylyektdp"}
+{"time":"2024-12-11T18:26:39.498018907+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-11T18:26:39.498983711+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-11T18:26:40.897904193+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-11T18:26:41.230603227+05:30","level":"INFO","msg":"handler: closed","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:41.230644083+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:41.230656614+05:30","level":"INFO","msg":"sender: closed","stream_id":"ylyektdp"}
+{"time":"2024-12-11T18:26:41.2307515+05:30","level":"INFO","msg":"stream: closed","id":"ylyektdp"}

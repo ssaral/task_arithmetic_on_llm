@@ -1,0 +1,16 @@
+{"time":"2024-12-11T18:11:19.033262478+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T18:11:19.033294381+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_181119-lkhc35jr/logs/debug-core.log"}
+{"time":"2024-12-11T18:11:22.773421195+05:30","level":"INFO","msg":"created new stream","id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:22.77348919+05:30","level":"INFO","msg":"stream: started","id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:22.773550653+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:22.773556746+05:30","level":"INFO","msg":"sender: started","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:22.77362699+05:30","level":"INFO","msg":"handler: started","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:23.219156633+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-11T18:11:26.961742812+05:30","level":"INFO","msg":"stream: closing","id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:26.961820907+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-11T18:11:26.964748447+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-11T18:11:28.138237699+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-11T18:11:28.470868369+05:30","level":"INFO","msg":"handler: closed","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:28.470917746+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:28.470950682+05:30","level":"INFO","msg":"sender: closed","stream_id":"lkhc35jr"}
+{"time":"2024-12-11T18:11:28.471027132+05:30","level":"INFO","msg":"stream: closed","id":"lkhc35jr"}

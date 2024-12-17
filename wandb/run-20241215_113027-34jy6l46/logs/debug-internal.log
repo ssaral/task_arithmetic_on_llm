@@ -1,0 +1,16 @@
+{"time":"2024-12-15T11:30:27.353026324+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-15T11:30:27.353050912+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241215_113027-34jy6l46/logs/debug-core.log"}
+{"time":"2024-12-15T11:30:31.095196005+05:30","level":"INFO","msg":"created new stream","id":"34jy6l46"}
+{"time":"2024-12-15T11:30:31.09526222+05:30","level":"INFO","msg":"stream: started","id":"34jy6l46"}
+{"time":"2024-12-15T11:30:31.095357823+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:30:31.095398158+05:30","level":"INFO","msg":"handler: started","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:30:31.095437688+05:30","level":"INFO","msg":"sender: started","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:30:31.525361106+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-15T11:31:21.030612255+05:30","level":"INFO","msg":"stream: closing","id":"34jy6l46"}
+{"time":"2024-12-15T11:31:21.030683738+05:30","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-15T11:31:21.031679969+05:30","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-15T11:31:22.091827574+05:30","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-15T11:31:22.415714099+05:30","level":"INFO","msg":"handler: closed","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:31:22.415755898+05:30","level":"INFO","msg":"writer: Close: closed","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:31:22.415797348+05:30","level":"INFO","msg":"sender: closed","stream_id":"34jy6l46"}
+{"time":"2024-12-15T11:31:22.415868002+05:30","level":"INFO","msg":"stream: closed","id":"34jy6l46"}

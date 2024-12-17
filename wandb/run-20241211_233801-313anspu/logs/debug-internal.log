@@ -1,0 +1,11 @@
+{"time":"2024-12-11T23:38:01.098366897+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T23:38:01.098391425+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_233801-313anspu/logs/debug-core.log"}
+{"time":"2024-12-11T23:38:01.213163068+05:30","level":"INFO","msg":"created new stream","id":"313anspu"}
+{"time":"2024-12-11T23:38:01.213205564+05:30","level":"INFO","msg":"stream: started","id":"313anspu"}
+{"time":"2024-12-11T23:38:01.213326723+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"313anspu"}
+{"time":"2024-12-11T23:38:01.213365728+05:30","level":"INFO","msg":"handler: started","stream_id":"313anspu"}
+{"time":"2024-12-11T23:38:01.213401554+05:30","level":"INFO","msg":"sender: started","stream_id":"313anspu"}
+{"time":"2024-12-11T23:38:01.617936983+05:30","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-11T23:38:02.5342973+05:30","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-11T23:39:19.58245874+05:30","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-11T23:39:19.663137104+05:30","level":"INFO","msg":"Pausing system monitor"}

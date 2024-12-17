@@ -1,0 +1,168 @@
+====================================================================================================
+Finetuning ViT-B-32 on MNIST
+====================================================================================================
+Building image encoder.
+Building image encoder.
+Loading ViT-B-32 pre-trained weights.
+Loading ViT-B-32 pre-trained weights.
+Did not find classification head for ViT-B-32 on MNISTVal at checkpoints/ViT-B-32/head_MNISTVal.pt, building one from scratch.
+Loading ViT-B-32 pre-trained weights.
+Did not find classification head for ViT-B-32 on MNISTVal at checkpoints/ViT-B-32/head_MNISTVal.pt, building one from scratch.
+Loading ViT-B-32 pre-trained weights.
+Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw/train-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw/train-images-idx3-ubyte.gz
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9912422/9912422 [00:01<00:00, 6231190.41it/s]
+Extracting /home/ganesh/data/MNIST/raw/train-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw
+ 29%|█████████████████████████████████▎                                                                                  | 2850816/9912422 [00:01<00:02, 3475009.08it/s]
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9912422/9912422 [00:01<00:00, 5301231.85it/s]
+Extracting /home/ganesh/data/MNIST/raw/train-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw/train-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw/train-labels-idx1-ubyte.gz
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 28881/28881 [00:00<00:00, 140230.78it/s]
+Extracting /home/ganesh/data/MNIST/raw/train-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 28881/28881 [00:00<00:00, 135911.75it/s]
+Extracting /home/ganesh/data/MNIST/raw/train-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw/t10k-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw/t10k-images-idx3-ubyte.gz
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1648877/1648877 [00:01<00:00, 1308338.94it/s]
+Extracting /home/ganesh/data/MNIST/raw/t10k-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1648877/1648877 [00:01<00:00, 1438812.26it/s]
+Extracting /home/ganesh/data/MNIST/raw/t10k-images-idx3-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw/t10k-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw/t10k-labels-idx1-ubyte.gz
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 4542/4542 [00:00<00:00, 3395210.97it/s]
+Extracting /home/ganesh/data/MNIST/raw/t10k-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Building classification head.
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 4542/4542 [00:00<00:00, 2238342.00it/s]
+Extracting /home/ganesh/data/MNIST/raw/t10k-labels-idx1-ubyte.gz to /home/ganesh/data/MNIST/raw
+
+Building classification head.
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 10.00it/s]
+Saving classification head to checkpoints/ViT-B-32/head_MNISTVal.pt
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 10.73it/s]
+Saving classification head to checkpoints/ViT-B-32/head_MNISTVal.pt
+Saving image encoder to checkpoints/ViT-B-32/MNISTVal/zeroshot.pt
+Train Epoch: 0 [0% 0/430]       Loss: 1.992845  Data (t) 0.041  Batch (t) 2.196
+Train Epoch: 0 [23% 100/430]    Loss: 0.082364  Data (t) 0.009  Batch (t) 0.181
+Train Epoch: 0 [47% 200/430]    Loss: 0.175266  Data (t) 0.007  Batch (t) 0.182
+Train Epoch: 0 [70% 300/430]    Loss: 0.115538  Data (t) 0.009  Batch (t) 0.179
+Train Epoch: 0 [93% 400/430]    Loss: 0.031538  Data (t) 0.011  Batch (t) 0.183
+Train Epoch: 1 [16% 70/430]     Loss: 0.010136  Data (t) 0.008  Batch (t) 0.189
+Train Epoch: 1 [40% 170/430]    Loss: 0.152894  Data (t) 0.010  Batch (t) 0.187
+Train Epoch: 1 [63% 270/430]    Loss: 0.083287  Data (t) 0.010  Batch (t) 0.191
+Train Epoch: 1 [86% 370/430]    Loss: 0.077693  Data (t) 0.011  Batch (t) 0.189
+Train Epoch: 2 [9% 40/430]      Loss: 0.068090  Data (t) 0.007  Batch (t) 0.192
+Train Epoch: 2 [33% 140/430]    Loss: 0.020567  Data (t) 0.007  Batch (t) 0.184
+Train Epoch: 2 [56% 240/430]    Loss: 0.006764  Data (t) 0.007  Batch (t) 0.187
+Train Epoch: 2 [79% 340/430]    Loss: 0.006076  Data (t) 0.007  Batch (t) 0.186
+Train Epoch: 3 [2% 10/430]      Loss: 0.112106  Data (t) 0.010  Batch (t) 0.186
+Train Epoch: 3 [26% 110/430]    Loss: 0.004769  Data (t) 0.007  Batch (t) 0.185
+Train Epoch: 3 [49% 210/430]    Loss: 0.007058  Data (t) 0.007  Batch (t) 0.185
+Train Epoch: 3 [72% 310/430]    Loss: 0.004560  Data (t) 0.007  Batch (t) 0.185
+Train Epoch: 3 [95% 410/430]    Loss: 0.004779  Data (t) 0.008  Batch (t) 0.186
+Train Epoch: 4 [19% 80/430]     Loss: 0.005810  Data (t) 0.007  Batch (t) 0.183
+Train Epoch: 4 [42% 180/430]    Loss: 0.002853  Data (t) 0.008  Batch (t) 0.175
+Train Epoch: 4 [65% 280/430]    Loss: 0.006212  Data (t) 0.007  Batch (t) 0.185
+Train Epoch: 4 [88% 380/430]    Loss: 0.011636  Data (t) 0.007  Batch (t) 0.194
+Classification head for ViT-B-32 on MNISTVal exists at checkpoints/ViT-B-32/head_MNISTVal.pt
+Loading classification head from checkpoints/ViT-B-32/head_MNISTVal.pt
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [00:08<00:00,  4.46it/s]
+Done evaluating on MNISTVal. Accuracy: 99.62%
+Saving image encoder to checkpoints/ViT-B-32/MNISTVal/finetuned.pt
+====================================================================================================
+Finetuning ViT-B-32 on CIFAR10
+====================================================================================================
+Building image encoder.
+Loading ViT-B-32 pre-trained weights.
+Building image encoder.
+Loading ViT-B-32 pre-trained weights.
+Did not find classification head for ViT-B-32 on CIFAR10Val at checkpoints/ViT-B-32/head_CIFAR10Val.pt, building one from scratch.
+Loading ViT-B-32 pre-trained weights.
+Did not find classification head for ViT-B-32 on CIFAR10Val at checkpoints/ViT-B-32/head_CIFAR10Val.pt, building one from scratch.
+Loading ViT-B-32 pre-trained weights.
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Building classification head.
+  0%|                                                                                                                                            | 0/10 [00:00<?, ?it/s]Building classification head.
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  9.32it/s]
+Saving classification head to checkpoints/ViT-B-32/head_CIFAR10Val.pt
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:01<00:00,  9.36it/s]
+Saving classification head to checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Saving image encoder to checkpoints/ViT-B-32/CIFAR10Val/zeroshot.pt
+Train Epoch: 0 [0% 0/352]       Loss: 0.345877  Data (t) 0.056  Batch (t) 2.335
+Train Epoch: 0 [28% 100/352]    Loss: 0.141753  Data (t) 0.015  Batch (t) 0.193
+Train Epoch: 0 [57% 200/352]    Loss: 0.266224  Data (t) 0.007  Batch (t) 0.191
+Train Epoch: 0 [85% 300/352]    Loss: 0.023827  Data (t) 0.007  Batch (t) 0.183
+Train Epoch: 1 [14% 48/352]     Loss: 0.079276  Data (t) 0.008  Batch (t) 0.186
+Train Epoch: 1 [42% 148/352]    Loss: 0.213357  Data (t) 0.008  Batch (t) 0.186
+Train Epoch: 1 [70% 248/352]    Loss: 0.123878  Data (t) 0.008  Batch (t) 0.186
+Train Epoch: 1 [99% 348/352]    Loss: 0.174772  Data (t) 0.007  Batch (t) 0.194
+Train Epoch: 2 [27% 96/352]     Loss: 0.013162  Data (t) 0.008  Batch (t) 0.187
+Train Epoch: 2 [56% 196/352]    Loss: 0.037630  Data (t) 0.008  Batch (t) 0.186
+Train Epoch: 2 [84% 296/352]    Loss: 0.008579  Data (t) 0.008  Batch (t) 0.193
+Train Epoch: 3 [12% 44/352]     Loss: 0.001553  Data (t) 0.007  Batch (t) 0.186
+Train Epoch: 3 [41% 144/352]    Loss: 0.052757  Data (t) 0.007  Batch (t) 0.190
+Train Epoch: 3 [69% 244/352]    Loss: 0.052212  Data (t) 0.008  Batch (t) 0.187
+Train Epoch: 3 [98% 344/352]    Loss: 0.054855  Data (t) 0.007  Batch (t) 0.194
+Train Epoch: 4 [26% 92/352]     Loss: 0.000186  Data (t) 0.008  Batch (t) 0.190
+Train Epoch: 4 [55% 192/352]    Loss: 0.001144  Data (t) 0.008  Batch (t) 0.190
+Train Epoch: 4 [83% 292/352]    Loss: 0.000097  Data (t) 0.007  Batch (t) 0.200
+Classification head for ViT-B-32 on CIFAR10Val exists at checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Loading classification head from checkpoints/ViT-B-32/head_CIFAR10Val.pt
+Files already downloaded and verified
+Files already downloaded and verified
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 40/40 [00:56<00:00,  1.40s/it]
+Done evaluating on CIFAR10Val. Accuracy: 97.62%
+Saving image encoder to checkpoints/ViT-B-32/CIFAR10Val/finetuned.pt

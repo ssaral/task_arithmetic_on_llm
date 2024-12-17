@@ -1,0 +1,80 @@
+Some weights of GPT2ForSequenceClassification were not initialized from the model checkpoint at gpt2 and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/tuners/lora/layer.py:1264: UserWarning: fan_in_fan_out is set to False but the target module is `Conv1D`. Setting fan_in_fan_out to True.
+  warnings.warn(
+Using LoRA. Total trainable parameters: 296448
+                                                   
+{'loss': 0.7192, 'grad_norm': 11.15407657623291, 'learning_rate': 4.9263657957244656e-05, 'epoch': 0.05}
+{'loss': 0.688, 'grad_norm': 67.33247375488281, 'learning_rate': 4.8471892319873316e-05, 'epoch': 0.1}
+{'loss': 0.6609, 'grad_norm': 6.132725238800049, 'learning_rate': 4.7680126682501977e-05, 'epoch': 0.14}
+{'loss': 0.5712, 'grad_norm': 29.65030288696289, 'learning_rate': 4.6888361045130644e-05, 'epoch': 0.19}
+{'loss': 0.4605, 'grad_norm': 18.461933135986328, 'learning_rate': 4.609659540775931e-05, 'epoch': 0.24}
+{'loss': 0.406, 'grad_norm': 42.86875915527344, 'learning_rate': 4.530482977038797e-05, 'epoch': 0.29}
+{'loss': 0.3969, 'grad_norm': 6.792612552642822, 'learning_rate': 4.451306413301663e-05, 'epoch': 0.33}
+{'loss': 0.374, 'grad_norm': 8.63123893737793, 'learning_rate': 4.372129849564529e-05, 'epoch': 0.38}
+{'loss': 0.3796, 'grad_norm': 4.062771797180176, 'learning_rate': 4.292953285827395e-05, 'epoch': 0.43}
+{'loss': 0.3623, 'grad_norm': 10.864386558532715, 'learning_rate': 4.213776722090261e-05, 'epoch': 0.48}
+{'loss': 0.3608, 'grad_norm': 30.18729019165039, 'learning_rate': 4.134600158353127e-05, 'epoch': 0.52}
+{'loss': 0.3551, 'grad_norm': 41.83388137817383, 'learning_rate': 4.055423594615994e-05, 'epoch': 0.57}
+{'loss': 0.3523, 'grad_norm': 5.816074848175049, 'learning_rate': 3.97624703087886e-05, 'epoch': 0.62}
+{'loss': 0.3594, 'grad_norm': 10.828227996826172, 'learning_rate': 3.897070467141726e-05, 'epoch': 0.67}
+{'loss': 0.3614, 'grad_norm': 8.219446182250977, 'learning_rate': 3.817893903404592e-05, 'epoch': 0.71}
+{'loss': 0.3588, 'grad_norm': 13.264511108398438, 'learning_rate': 3.738717339667458e-05, 'epoch': 0.76}
+{'loss': 0.3515, 'grad_norm': 34.076446533203125, 'learning_rate': 3.659540775930325e-05, 'epoch': 0.81}
+{'loss': 0.3481, 'grad_norm': 23.535463333129883, 'learning_rate': 3.580364212193191e-05, 'epoch': 0.86}
+{'loss': 0.335, 'grad_norm': 46.252655029296875, 'learning_rate': 3.5011876484560577e-05, 'epoch': 0.9}
+{'loss': 0.3282, 'grad_norm': 39.233978271484375, 'learning_rate': 3.422011084718924e-05, 'epoch': 0.95}
+{'loss': 0.3414, 'grad_norm': 3.424962043762207, 'learning_rate': 3.34283452098179e-05, 'epoch': 1.0}
+{'loss': 0.359, 'grad_norm': 21.415042877197266, 'learning_rate': 3.263657957244656e-05, 'epoch': 1.05}
+{'loss': 0.333, 'grad_norm': 8.289572715759277, 'learning_rate': 3.184481393507522e-05, 'epoch': 1.09}
+{'loss': 0.3232, 'grad_norm': 9.354264259338379, 'learning_rate': 3.105304829770388e-05, 'epoch': 1.14}
+{'loss': 0.3493, 'grad_norm': 10.527253150939941, 'learning_rate': 3.0261282660332542e-05, 'epoch': 1.19}
+{'loss': 0.3427, 'grad_norm': 6.692832946777344, 'learning_rate': 2.9469517022961206e-05, 'epoch': 1.24}
+{'loss': 0.3377, 'grad_norm': 11.274686813354492, 'learning_rate': 2.867775138558987e-05, 'epoch': 1.28}
+{'loss': 0.3329, 'grad_norm': 13.163989067077637, 'learning_rate': 2.788598574821853e-05, 'epoch': 1.33}
+{'loss': 0.3249, 'grad_norm': 19.973405838012695, 'learning_rate': 2.709422011084719e-05, 'epoch': 1.38}
+{'loss': 0.3045, 'grad_norm': 36.572723388671875, 'learning_rate': 2.630245447347585e-05, 'epoch': 1.43}
+{'loss': 0.3396, 'grad_norm': 7.900473594665527, 'learning_rate': 2.551068883610451e-05, 'epoch': 1.47}
+{'loss': 0.3402, 'grad_norm': 41.14884948730469, 'learning_rate': 2.4718923198733175e-05, 'epoch': 1.52}
+{'loss': 0.3203, 'grad_norm': 5.613617420196533, 'learning_rate': 2.392715756136184e-05, 'epoch': 1.57}
+{'loss': 0.3195, 'grad_norm': 33.6246337890625, 'learning_rate': 2.31353919239905e-05, 'epoch': 1.62}
+{'loss': 0.316, 'grad_norm': 3.525066375732422, 'learning_rate': 2.2343626286619163e-05, 'epoch': 1.66}
+{'loss': 0.3029, 'grad_norm': 9.763725280761719, 'learning_rate': 2.1551860649247823e-05, 'epoch': 1.71}
+{'loss': 0.3135, 'grad_norm': 17.20176124572754, 'learning_rate': 2.0760095011876484e-05, 'epoch': 1.76}
+{'loss': 0.3215, 'grad_norm': 10.59113597869873, 'learning_rate': 1.9968329374505148e-05, 'epoch': 1.81}
+{'loss': 0.3207, 'grad_norm': 8.803647994995117, 'learning_rate': 1.917656373713381e-05, 'epoch': 1.85}
+{'loss': 0.3248, 'grad_norm': 16.915122985839844, 'learning_rate': 1.838479809976247e-05, 'epoch': 1.9}
+{'loss': 0.3225, 'grad_norm': 5.879868984222412, 'learning_rate': 1.7600950118764847e-05, 'epoch': 1.95}
+{'loss': 0.3289, 'grad_norm': 32.99666976928711, 'learning_rate': 1.6809184481393508e-05, 'epoch': 2.0}
+{'loss': 0.3115, 'grad_norm': 46.356502532958984, 'learning_rate': 1.6017418844022168e-05, 'epoch': 2.04}
+{'loss': 0.3243, 'grad_norm': 40.5760383605957, 'learning_rate': 1.5225653206650833e-05, 'epoch': 2.09}
+{'loss': 0.3149, 'grad_norm': 13.69959831237793, 'learning_rate': 1.4433887569279494e-05, 'epoch': 2.14}
+{'loss': 0.3309, 'grad_norm': 45.16452407836914, 'learning_rate': 1.3642121931908156e-05, 'epoch': 2.19}
+{'loss': 0.3141, 'grad_norm': 8.306684494018555, 'learning_rate': 1.2850356294536816e-05, 'epoch': 2.23}
+{'loss': 0.3164, 'grad_norm': 5.72664737701416, 'learning_rate': 1.2058590657165478e-05, 'epoch': 2.28}
+{'loss': 0.3156, 'grad_norm': 7.44366979598999, 'learning_rate': 1.1266825019794142e-05, 'epoch': 2.33}
+{'loss': 0.3221, 'grad_norm': 6.102050304412842, 'learning_rate': 1.0475059382422803e-05, 'epoch': 2.38}
+{'loss': 0.3213, 'grad_norm': 11.735084533691406, 'learning_rate': 9.683293745051465e-06, 'epoch': 2.42}
+{'loss': 0.304, 'grad_norm': 19.14445686340332, 'learning_rate': 8.891528107680128e-06, 'epoch': 2.47}
+{'loss': 0.3095, 'grad_norm': 11.168059349060059, 'learning_rate': 8.099762470308789e-06, 'epoch': 2.52}
+{'loss': 0.3137, 'grad_norm': 26.7945556640625, 'learning_rate': 7.307996832937451e-06, 'epoch': 2.57}
+{'loss': 0.3313, 'grad_norm': 14.259077072143555, 'learning_rate': 6.516231195566112e-06, 'epoch': 2.61}
+{'loss': 0.317, 'grad_norm': 14.760210990905762, 'learning_rate': 5.724465558194775e-06, 'epoch': 2.66}
+{'loss': 0.3325, 'grad_norm': 4.190017223358154, 'learning_rate': 4.932699920823436e-06, 'epoch': 2.71}
+{'loss': 0.2944, 'grad_norm': 2.2580506801605225, 'learning_rate': 4.140934283452098e-06, 'epoch': 2.76}
+{'loss': 0.3031, 'grad_norm': 36.974037170410156, 'learning_rate': 3.34916864608076e-06, 'epoch': 2.8}
+{'loss': 0.295, 'grad_norm': 20.474214553833008, 'learning_rate': 2.5574030087094225e-06, 'epoch': 2.85}
+{'loss': 0.3161, 'grad_norm': 22.014892578125, 'learning_rate': 1.7735550277117974e-06, 'epoch': 2.9}
+{'loss': 0.3116, 'grad_norm': 10.85650634765625, 'learning_rate': 9.817893903404593e-07, 'epoch': 2.95}
+{'loss': 0.2937, 'grad_norm': 17.000646591186523, 'learning_rate': 1.9002375296912116e-07, 'epoch': 2.99}
+{'train_runtime': 1646.2194, 'train_samples_per_second': 122.734, 'train_steps_per_second': 3.836, 'train_loss': 0.3544816103985832, 'epoch': 3.0}
+Traceback (most recent call last):
+  File "/mnt/ss/text_based_implementation/non_linear_sentiment_gpt2.py", line 100, in <module>
+    torch.save(model.state_dict(), "./lora_finetuned_sentiment_gpt2_model/lora_sentiment_model.pt")  # Save as .pt file
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/serialization.py", line 422, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/serialization.py", line 309, in _open_zipfile_writer
+    return container(name_or_buffer)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/serialization.py", line 287, in __init__
+    super(_open_zipfile_writer_file, self).__init__(torch._C.PyTorchFileWriter(str(name)))
+RuntimeError: Parent directory ./lora_finetuned_sentiment_gpt2_model does not exist.

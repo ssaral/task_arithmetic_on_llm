@@ -1,0 +1,8 @@
+{"time":"2024-12-11T18:30:14.131299815+05:30","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-11T18:30:14.131325458+05:30","level":"INFO","msg":"created symlink","path":"/mnt/ss/text_based_implementation/wandb/run-20241211_183014-pn5aatnn/logs/debug-core.log"}
+{"time":"2024-12-11T18:30:17.671563716+05:30","level":"INFO","msg":"created new stream","id":"pn5aatnn"}
+{"time":"2024-12-11T18:30:17.671678651+05:30","level":"INFO","msg":"stream: started","id":"pn5aatnn"}
+{"time":"2024-12-11T18:30:17.671710234+05:30","level":"INFO","msg":"writer: Do: started","stream_id":"pn5aatnn"}
+{"time":"2024-12-11T18:30:17.67172537+05:30","level":"INFO","msg":"sender: started","stream_id":"pn5aatnn"}
+{"time":"2024-12-11T18:30:17.671745095+05:30","level":"INFO","msg":"handler: started","stream_id":"pn5aatnn"}
+{"time":"2024-12-11T18:30:18.093465408+05:30","level":"INFO","msg":"Starting system monitor"}

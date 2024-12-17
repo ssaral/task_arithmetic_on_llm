@@ -1,0 +1,2 @@
+/home/ganesh/miniconda3/envs/senv/lib/python3.10/site-packages/peft/tuners/lora/layer.py:1264: UserWarning: fan_in_fan_out is set to False but the target module is `Conv1D`. Setting fan_in_fan_out to True.
+  warnings.warn(

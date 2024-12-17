@@ -1,0 +1,96 @@
+tokenizer_config.json: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 26.0/26.0 [00:00<00:00, 73.4kB/s]
+vocab.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1.04M/1.04M [00:00<00:00, 1.85MB/s]
+tokenizer.json: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1.36M/1.36M [00:00<00:00, 3.50MB/s]
+config.json: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 665/665 [00:00<00:00, 1.60MB/s]
+Some weights of GPT2ForSequenceClassification were not initialized from the model checkpoint at gpt2 and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/tuners/lora/layer.py:1264: UserWarning: fan_in_fan_out is set to False but the target module is `Conv1D`. Setting fan_in_fan_out to True.
+  warnings.warn(
+Using LoRA. Total trainable parameters: 296448
+                                                                                                                                                                          
+{'loss': 0.71, 'grad_norm': 17.294546127319336, 'learning_rate': 4.9263657957244656e-05, 'epoch': 0.05}
+{'loss': 0.6927, 'grad_norm': 73.5774154663086, 'learning_rate': 4.8471892319873316e-05, 'epoch': 0.1}
+{'loss': 0.6723, 'grad_norm': 6.234123706817627, 'learning_rate': 4.7680126682501977e-05, 'epoch': 0.14}
+{'loss': 0.6064, 'grad_norm': 5.4530158042907715, 'learning_rate': 4.6888361045130644e-05, 'epoch': 0.19}
+{'loss': 0.4792, 'grad_norm': 21.61785316467285, 'learning_rate': 4.609659540775931e-05, 'epoch': 0.24}
+{'loss': 0.4112, 'grad_norm': 46.856197357177734, 'learning_rate': 4.530482977038797e-05, 'epoch': 0.29}
+{'loss': 0.3995, 'grad_norm': 17.125598907470703, 'learning_rate': 4.451306413301663e-05, 'epoch': 0.33}
+{'loss': 0.3841, 'grad_norm': 7.176438808441162, 'learning_rate': 4.372129849564529e-05, 'epoch': 0.38}
+{'loss': 0.3889, 'grad_norm': 12.62390422821045, 'learning_rate': 4.292953285827395e-05, 'epoch': 0.43}
+{'loss': 0.3731, 'grad_norm': 31.64646339416504, 'learning_rate': 4.213776722090261e-05, 'epoch': 0.48}
+{'loss': 0.3641, 'grad_norm': 21.717798233032227, 'learning_rate': 4.134600158353127e-05, 'epoch': 0.52}
+{'loss': 0.3572, 'grad_norm': 45.51871109008789, 'learning_rate': 4.055423594615994e-05, 'epoch': 0.57}
+{'loss': 0.3629, 'grad_norm': 8.608260154724121, 'learning_rate': 3.97624703087886e-05, 'epoch': 0.62}
+{'loss': 0.3674, 'grad_norm': 6.6539387702941895, 'learning_rate': 3.897070467141726e-05, 'epoch': 0.67}
+{'loss': 0.368, 'grad_norm': 38.79204559326172, 'learning_rate': 3.817893903404592e-05, 'epoch': 0.71}
+{'loss': 0.3693, 'grad_norm': 20.437232971191406, 'learning_rate': 3.738717339667458e-05, 'epoch': 0.76}
+{'loss': 0.3638, 'grad_norm': 28.327260971069336, 'learning_rate': 3.659540775930325e-05, 'epoch': 0.81}
+{'loss': 0.3614, 'grad_norm': 38.65602111816406, 'learning_rate': 3.580364212193191e-05, 'epoch': 0.86}
+{'loss': 0.344, 'grad_norm': 58.568885803222656, 'learning_rate': 3.5011876484560577e-05, 'epoch': 0.9}
+{'loss': 0.3385, 'grad_norm': 50.831790924072266, 'learning_rate': 3.422011084718924e-05, 'epoch': 0.95}
+{'loss': 0.3466, 'grad_norm': 6.362009048461914, 'learning_rate': 3.34283452098179e-05, 'epoch': 1.0}
+{'loss': 0.365, 'grad_norm': 28.755084991455078, 'learning_rate': 3.263657957244656e-05, 'epoch': 1.05}
+{'loss': 0.3383, 'grad_norm': 10.527301788330078, 'learning_rate': 3.185273159144893e-05, 'epoch': 1.09}
+{'loss': 0.33, 'grad_norm': 11.435585021972656, 'learning_rate': 3.1060965954077594e-05, 'epoch': 1.14}
+{'loss': 0.3625, 'grad_norm': 9.50756549835205, 'learning_rate': 3.0269200316706257e-05, 'epoch': 1.19}
+{'loss': 0.353, 'grad_norm': 5.155488967895508, 'learning_rate': 2.947743467933492e-05, 'epoch': 1.24}
+{'loss': 0.346, 'grad_norm': 9.415404319763184, 'learning_rate': 2.868566904196358e-05, 'epoch': 1.28}
+{'loss': 0.3388, 'grad_norm': 38.899192810058594, 'learning_rate': 2.7893903404592242e-05, 'epoch': 1.33}
+{'loss': 0.3322, 'grad_norm': 24.31077766418457, 'learning_rate': 2.7102137767220902e-05, 'epoch': 1.38}
+{'loss': 0.3196, 'grad_norm': 66.42208099365234, 'learning_rate': 2.6310372129849563e-05, 'epoch': 1.43}
+{'loss': 0.3495, 'grad_norm': 5.499454021453857, 'learning_rate': 2.5518606492478227e-05, 'epoch': 1.47}
+{'loss': 0.3478, 'grad_norm': 57.82728576660156, 'learning_rate': 2.472684085510689e-05, 'epoch': 1.52}
+{'loss': 0.3273, 'grad_norm': 20.727066040039062, 'learning_rate': 2.393507521773555e-05, 'epoch': 1.57}
+{'loss': 0.3278, 'grad_norm': 53.813446044921875, 'learning_rate': 2.3143309580364214e-05, 'epoch': 1.62}
+{'loss': 0.3216, 'grad_norm': 3.5452022552490234, 'learning_rate': 2.2351543942992875e-05, 'epoch': 1.66}
+{'loss': 0.318, 'grad_norm': 6.7595014572143555, 'learning_rate': 2.1559778305621535e-05, 'epoch': 1.71}
+{'loss': 0.3188, 'grad_norm': 32.40996551513672, 'learning_rate': 2.07680126682502e-05, 'epoch': 1.76}
+{'loss': 0.3235, 'grad_norm': 26.100696563720703, 'learning_rate': 1.9976247030878863e-05, 'epoch': 1.81}
+{'loss': 0.3266, 'grad_norm': 16.371252059936523, 'learning_rate': 1.9184481393507523e-05, 'epoch': 1.85}
+{'loss': 0.3298, 'grad_norm': 22.895347595214844, 'learning_rate': 1.8392715756136183e-05, 'epoch': 1.9}
+{'loss': 0.3272, 'grad_norm': 11.737456321716309, 'learning_rate': 1.7600950118764847e-05, 'epoch': 1.95}
+{'loss': 0.3373, 'grad_norm': 59.09128952026367, 'learning_rate': 1.6809184481393508e-05, 'epoch': 2.0}
+{'loss': 0.3225, 'grad_norm': 92.24031066894531, 'learning_rate': 1.6017418844022168e-05, 'epoch': 2.04}
+{'loss': 0.3381, 'grad_norm': 70.46691131591797, 'learning_rate': 1.5233570863024545e-05, 'epoch': 2.09}
+{'loss': 0.3232, 'grad_norm': 29.829343795776367, 'learning_rate': 1.4441805225653207e-05, 'epoch': 2.14}
+{'loss': 0.3389, 'grad_norm': 65.84153747558594, 'learning_rate': 1.3650039588281868e-05, 'epoch': 2.19}
+{'loss': 0.3285, 'grad_norm': 13.144639015197754, 'learning_rate': 1.2858273950910532e-05, 'epoch': 2.23}
+{'loss': 0.3243, 'grad_norm': 10.13503360748291, 'learning_rate': 1.2066508313539194e-05, 'epoch': 2.28}
+{'loss': 0.3247, 'grad_norm': 8.862421989440918, 'learning_rate': 1.1274742676167854e-05, 'epoch': 2.33}
+{'loss': 0.3294, 'grad_norm': 4.600666046142578, 'learning_rate': 1.0482977038796516e-05, 'epoch': 2.38}
+{'loss': 0.3364, 'grad_norm': 25.18124771118164, 'learning_rate': 9.69121140142518e-06, 'epoch': 2.42}
+{'loss': 0.313, 'grad_norm': 34.55799865722656, 'learning_rate': 8.89944576405384e-06, 'epoch': 2.47}
+{'loss': 0.3159, 'grad_norm': 32.50492858886719, 'learning_rate': 8.107680126682502e-06, 'epoch': 2.52}
+{'loss': 0.3217, 'grad_norm': 52.15608215332031, 'learning_rate': 7.3159144893111635e-06, 'epoch': 2.57}
+{'loss': 0.3419, 'grad_norm': 33.32408905029297, 'learning_rate': 6.5241488519398265e-06, 'epoch': 2.61}
+{'loss': 0.3279, 'grad_norm': 29.265413284301758, 'learning_rate': 5.7323832145684885e-06, 'epoch': 2.66}
+{'loss': 0.3435, 'grad_norm': 16.073148727416992, 'learning_rate': 4.94061757719715e-06, 'epoch': 2.71}
+{'loss': 0.3025, 'grad_norm': 3.188180923461914, 'learning_rate': 4.148851939825812e-06, 'epoch': 2.76}
+{'loss': 0.3154, 'grad_norm': 82.59465789794922, 'learning_rate': 3.3570863024544735e-06, 'epoch': 2.8}
+{'loss': 0.307, 'grad_norm': 36.40214538574219, 'learning_rate': 2.5653206650831356e-06, 'epoch': 2.85}
+{'loss': 0.3246, 'grad_norm': 33.26429748535156, 'learning_rate': 1.7735550277117974e-06, 'epoch': 2.9}
+{'loss': 0.3207, 'grad_norm': 16.7277774810791, 'learning_rate': 9.817893903404593e-07, 'epoch': 2.95}
+{'loss': 0.2988, 'grad_norm': 20.516359329223633, 'learning_rate': 1.9002375296912116e-07, 'epoch': 2.99}
+  File "/mnt/ss/text_based_implementation/non_linear_sentiment_gpt2.py", line 96, in <module>
+    trainer.train()
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 2164, in train
+    return inner_training_loop(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 2589, in _inner_training_loop
+    self._maybe_log_save_evaluate(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3054, in _maybe_log_save_evaluate
+    self._save_checkpoint(model, trial)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3186, in _save_checkpoint
+    self.save_model(output_dir, _internal_call=True)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3806, in save_model
+    self._save(output_dir)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3910, in _save
+    self.model.save_pretrained(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/peft_model.py", line 321, in save_pretrained
+    self.create_or_update_model_card(save_directory)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/peft_model.py", line 1360, in create_or_update_model_card
+    card = ModelCard.load(filename) if os.path.exists(filename) else ModelCard.from_template(ModelCardData())
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/huggingface_hub/repocard.py", line 416, in from_template
+    return super().from_template(card_data, template_path, template_str, **template_kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/huggingface_hub/repocard.py", line 321, in from_template
+    raise ImportError(
+ImportError: Using RepoCard.from_template requires Jinja2 to be installed. Please install it with `pip install Jinja2`.

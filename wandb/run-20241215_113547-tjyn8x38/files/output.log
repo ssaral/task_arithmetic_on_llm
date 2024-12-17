@@ -1,0 +1,7 @@
+Some weights of GPT2ForSequenceClassification were not initialized from the model checkpoint at gpt2 and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Zero-shot model saved to ./results_gpt2/zeroshot_model.pt
+/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/tuners/lora/layer.py:1264: UserWarning: fan_in_fan_out is set to False but the target module is `Conv1D`. Setting fan_in_fan_out to True.
+  warnings.warn(
+Using LoRA. Total trainable parameters: 296448
+LoRA fine-tuned model saved!

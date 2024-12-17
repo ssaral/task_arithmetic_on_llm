@@ -1,0 +1,56 @@
+Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:14<00:00,  7.44s/it]
+Some weights of LlamaForSequenceClassification were not initialized from the model checkpoint at meta-llama/Llama-2-7b-hf and are newly initialized: ['score.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Using LoRA. Total trainable parameters: 4202496
+/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/training_args.py:1575: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+  warnings.warn(
+  0%|                                                                                                                                            | 0/6315 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/mnt/ss/text_based_implementation/non_linear_sentiment.py", line 96, in <module>
+    trainer.train()
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 2164, in train
+    return inner_training_loop(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 2522, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3655, in training_step
+    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/trainer.py", line 3709, in compute_loss
+    outputs = model(**inputs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1040, in forward
+    output = self._run_ddp_forward(*inputs, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1000, in _run_ddp_forward
+    return module_to_run(*inputs[0], **kwargs[0])
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/accelerate/utils/operations.py", line 823, in forward
+    return model_forward(*args, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/accelerate/utils/operations.py", line 811, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/amp/autocast_mode.py", line 14, in decorate_autocast
+    return func(*args, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/peft_model.py", line 1521, in forward
+    return self.base_model(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/peft/tuners/tuners_utils.py", line 197, in forward
+    return self.model.forward(*args, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 1251, in forward
+    transformer_outputs = self.model(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 913, in forward
+    layer_outputs = decoder_layer(
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 656, in forward
+    hidden_states = self.mlp(hidden_states)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/transformers/models/llama/modeling_llama.py", line 242, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ganesh/miniconda3/envs/tangent-arithmetic/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 114, in forward
+    return F.linear(input, self.weight, self.bias)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 86.00 MiB (GPU 0; 47.54 GiB total capacity; 46.00 GiB already allocated; 82.75 MiB free; 46.42 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
