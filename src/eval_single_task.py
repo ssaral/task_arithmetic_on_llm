@@ -1,19 +1,25 @@
 import json
-
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, GPT2Tokenizer
 from src.args import parse_arguments
 from src.eval import eval_single_dataset
-from src.linearize import LinearizedImageEncoder
 from src.task_vectors import LinearizedTaskVector, NonLinearTaskVector
+from src.linearize import LinearizedLM, LinearizedModel
 
+
+# Parse arguments
 args = parse_arguments()
+
+# Define checkpoint save path
 if args.seed is not None:
     args.save = f"checkpoints_{args.seed}/{args.model}"
 else:
     args.save = f"checkpoints/{args.model}"
 
+# Initialize results dictionary
 accuracies = {}
 
-
+# Print evaluation mode
 print("*" * 100)
 if args.finetuning_mode == "none":
     print("Evaluating pretrained models.")
@@ -24,27 +30,20 @@ elif args.finetuning_mode == "linear":
 elif args.finetuning_mode == "posthoc":
     print("Evaluating post-hoc linearized models.")
 
-for dataset in [
-    "Cars",
-    "DTD",
-    "EuroSAT",
-    "GTSRB",
-    "MNIST",
-    "RESISC45",
-    "SUN397",
-    "SVHN",
-]:
+# Define tasks for evaluation
+for task in ["sst2", "qnli", "cola"]: #, "mnli_matched"]:  
     print("*" * 100)
-    print(f"Evaluating on {dataset}")
+    print(f"Evaluating on {task}")
 
-    pretrained_checkpoint = f"{args.save}/{dataset}Val/zeroshot.pt"
-
+    # Define paths for pretrained and finetuned checkpoints
+    pretrained_checkpoint = f"{args.save}/zeroshot_full_model.pt"
     finetuned_checkpoint = (
-        f"{args.save}/{dataset}Val/linear_finetuned.pt"
+        f"{args.save}/linear_finetuned.pt"
         if args.finetuning_mode == "linear"
-        else f"{args.save}/{dataset}Val/finetuned.pt"
+        else f"{args.save}/finetuned_full_model.pt"
     )
 
+    # Load task vector
     try:
         task_vector = (
             LinearizedTaskVector(pretrained_checkpoint, finetuned_checkpoint)
@@ -55,32 +54,31 @@ for dataset in [
         print(f"Error: Could not find {finetuned_checkpoint}.")
         continue
 
+    # Prepare the model based on finetuning mode
     if args.finetuning_mode == "none":
-        image_encoder = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
-    elif args.finetuning_mode == "standard" or args.finetuning_mode == "linear":
-        image_encoder = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
+        text_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
+    elif args.finetuning_mode in ["standard", "linear"]:
+        text_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
     elif args.finetuning_mode == "posthoc":
-        zs_encoder = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
-        ft_encoder = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
-        image_encoder = LinearizedImageEncoder(
-            init_encoder=zs_encoder, image_encoder=ft_encoder, args=args
-        )
+        zs_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
+        ft_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
+        text_model = LinearizedModel(init_model=zs_model, lm_model=ft_model, args=args)
 
-    for split in ["test", "val"]:
-        # Evaluate
+    # Load tokenizer
+    # tokenizer = AutoTokenizer.from_pretrained(args.model)
+    tokenizer = GPT2Tokenizer.from_pretrained(args.model)
+    tokenizer.pad_token = tokenizer.eos_token
+
+
+    # Evaluate on test and validation splits
+    for split in ["test", "validation"]:
         print("=" * 100)
         print(f"Evaluating on {split} split.")
-        eval_dataset = dataset if split == "test" else f"{dataset}Val"
+        eval_task = task #if split == "test" else f"validation"
 
-        accuracies[eval_dataset] = eval_single_dataset(
-            image_encoder, eval_dataset, args
-        )["top1"]
-
-
-if args.finetuning_mode == "none":
-    # Evaluate zero-shot accuracy on ImageNet
-    for split in ["ImageNetVal", "ImageNet"]:
-        accuracies[split] = eval_single_dataset(image_encoder, split, args)["top1"]
+        accuracies[eval_task] = eval_single_dataset(
+            text_model, tokenizer, eval_task, split,  args
+        )["accuracy"]
 
 # Save results
 if args.finetuning_mode == "none":

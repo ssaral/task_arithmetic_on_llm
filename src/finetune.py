@@ -2,11 +2,13 @@ import os
 import time
 import torch
 import torch.nn as nn
-from transformers import GPT2LMHeadModel, GPT2Tokenizer, AdamW, get_scheduler
-from src.linearize import LinearizedModel
+from transformers import GPT2LMHeadModel, GPT2Tokenizer, AdamW, get_scheduler, AutoModelForSequenceClassification, AutoModelForTokenClassification
+from src.linearize import LinearizedModel, LinearizedLM
 from src.distributed import setup_ddp, distribute_loader, cleanup_ddp, is_main_process
 from src.utils import LabelSmoothing
 import wandb
+
+# import generate_sentiment_data
 
 def finetune(rank, args):
     setup_ddp(rank, args.world_size, port=args.port)
@@ -24,13 +26,14 @@ def finetune(rank, args):
     ckpdir = os.path.join(args.save, "checkpoints")
     os.makedirs(ckpdir, exist_ok=True)
 
-    wandb.init(
-        project="gpt2-finetune",  # Replace with your project name
-        entity="ssaral-india",
-        config=args,  # Log hyperparameters from argparse
-        name=f"finetuning-{args.finetuning_mode}",  # Name of the experiment
-        dir=args.save  # Specify where logs are saved
-    )
+    # wandb.init(
+    #     project="gpt2-finetune",  # Replace with your project name
+    #     entity="ssaral-india",
+    #     config=args,  # Log hyperparameters from argparse
+    #     name=f"finetuning-{args.finetuning_mode}",  # Name of the experiment
+    #     dir=args.save  # Specify where logs are saved
+    # )
+
 
     # Load GPT-2 model
     if args.load:
@@ -38,13 +41,25 @@ def finetune(rank, args):
         model = torch.load(args.load, map_location="cpu")
     else:
         print("Building GPT-2 model.")
-        model = GPT2LMHeadModel.from_pretrained(args.model)
+        # model = GPT2LMHeadModel.from_pretrained(args.model)
+        if args.task == "classification":
+            print("Loading classification model.")
+            model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        elif args.task == "ner":
+            print("Loading token classification model for NER.")
+            model = AutoModelForTokenClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        else:
+            print("Loading GPT-2 model for summarization.")
+            model = GPT2LMHeadModel.from_pretrained(args.model)
+    
+    model.config.pad_token_id = tokenizer.pad_token_id
 
     if linearized_finetuning:
+        # model = LinearizedLM(model)
         model = LinearizedModel(model)
 
     model = model.cuda(rank)
-    ddp_model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[rank], output_device=rank)
+    ddp_model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[rank], output_device=rank, find_unused_parameters=True)
 
     train_dataset = torch.load(args.train_data)  # Assume tokenized dataset is pre-saved
     train_loader = torch.utils.data.DataLoader(
@@ -56,7 +71,8 @@ def finetune(rank, args):
     if args.ls > 0:
         loss_fn = LabelSmoothing(args.ls)
     else:
-        loss_fn = nn.CrossEntropyLoss()
+        loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer.pad_token_id)
+        # loss_fn = nn.CrossEntropyLoss()
 
     # Optimizer and Scheduler
     optimizer = AdamW(ddp_model.parameters(), lr=args.lr, weight_decay=args.wd)
@@ -74,69 +90,91 @@ def finetune(rank, args):
         for step, batch in enumerate(ddp_loader):
             start_time = time.time()
 
-            # step = (
-            #     i // args.num_grad_accumulation
-            #     + epoch * num_batches // args.num_grad_accumulation
-            # )
 
             inputs, labels = batch["input_ids"].cuda(rank), batch["labels"].cuda(rank) 
             data_time = time.time() - start_time 
 
-            print("====================INPUT=================================")
-            print(type(inputs))
-            print("inputs.shape:", inputs.shape)
+            # print("====================INPUT=================================")
+            # print(type(inputs))
+            # print("inputs.shape:", inputs.shape)
 
             optimizer.zero_grad()
-            logits = ddp_model(inputs)
 
-            print("=====================LOGIT================================")
-            print("Logits", logits)
-            print("Logits shape", logits.shape)
+            if args.finetuning_mode == "linear":
+                logits = ddp_model(inputs)
+            else:
+                #setting up for non-linear
+                outputs = ddp_model(inputs)
+                logits = outputs.logits
 
-            print("====================LABEL=================================")
-            print("labels", labels)
-            print("Labels shape", labels.shape)
+            # print("=====================LOGIT================================")
+            # # print("Logits", logits)
+            # print("Logits shape", logits.shape)
 
-            loss = loss_fn(logits, labels)
+            # print("====================LABEL=================================")
+            # # print("labels", labels)
+            # print("Labels shape", labels.shape)
+
+            #setting up for non-linear 
+            if args.task != "classification":
+                logits = logits[:, :labels.size(1), :] 
+                logits_flat = logits.reshape(-1, logits.size(-1))
+                labels_flat = labels.reshape(-1)  
+                # print(f"logits_flat shape: {logits_flat.shape}, labels_flat shape: {labels_flat.shape}")
+                loss = loss_fn(logits_flat, labels_flat)
+            else:
+                detokenized_labels = [tokenizer.decode(label.item()) for label in labels]
+                # labels_flat = labels.reshape(-1)
+                detokenized_labels = torch.tensor([int(label.strip()) for label in detokenized_labels], dtype=torch.long)
+                detokenized_labels = detokenized_labels.to(logits.device)
+                # print("Labels reshape", detokenized_labels.shape)
+                # print(logits, "\n" , detokenized_labels)
+                loss = loss_fn(logits, detokenized_labels)
+
+
             loss.backward()
 
             optimizer.step()
             scheduler.step()
 
             if step % print_every == 0 and is_main_process():
-                wandb.log({
-                    "epoch": epoch,
-                    "step": step,
-                    "loss": loss.item(),
-                    "learning_rate": optimizer.param_groups[0]["lr"],
-                    "time_per_step": time.time() - start_time,
-                })
+                # wandb.log({
+                #     "epoch": epoch,
+                #     "step": step,
+                #     "loss": loss.item(),
+                #     "learning_rate": optimizer.param_groups[0]["lr"],
+                #     "time_per_step": time.time() - start_time,
+                # })
                 print(f"Epoch {epoch} | Step {step} | Loss {loss.item():.4f}")
 
             if step % args.checkpoint_every == 0 and is_main_process():
                 ft_path = os.path.join(ckpdir, f"checkpoint_{epoch}_{step}.pt")
                 torch.save(ddp_model.module.state_dict(), ft_path)
-                wandb.save(ft_path)
+                # wandb.save(ft_path)
 
     # Save final finetuned model
     if is_main_process():
         ft_path = os.path.join(ckpdir, "finetuned.pt")
         torch.save(ddp_model.module.state_dict(), ft_path)
-        wandb.save(ft_path)
+        # wandb.save(ft_path)
     
-    wandb.finish()
+    # wandb.finish()
     cleanup_ddp()
 
 if __name__ == "__main__":
     import argparse
 
+    print("To get training data for sentiment analysis: execute generate_sentiment_data.py file. If executed, then ignore.")
+
     parser = argparse.ArgumentParser(description="Fine-tune GPT-2 model")
+    parser.add_argument("--task", type=str, choices=["summarization", "classification", "ner"], required=True, help="Task type")
     parser.add_argument("--model", type=str, required=True, help="GPT-2 model size (e.g., gpt2, gpt2-medium)")
     parser.add_argument("--train-data", type=str, required=True, help="Path to tokenized training dataset")
+    parser.add_argument("--num-labels", type=int, default=2, help="Number of labels for classification or NER tasks")
     parser.add_argument("--finetuning-mode", type=str, choices=["linear", "standard"], required=True)
     parser.add_argument("--lr", type=float, default=5e-5, help="Learning rate")
     parser.add_argument("--batch-size", type=int, default=8, help="Batch size per GPU")
-    parser.add_argument("--epochs", type=int, default=3, help="Number of training epochs")
+    parser.add_argument("--epochs", type=int, default=20, help="Number of training epochs")
     parser.add_argument("--warmup-steps", type=int, default=500, help="Warmup steps for scheduler")
     parser.add_argument("--wd", type=float, default=0.01, help="Weight decay")
     parser.add_argument("--ls", type=float, default=0, help="Label smoothing")
@@ -149,4 +187,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print(f"Starting fine-tuning for GPT-2 in {args.finetuning_mode} mode.")
-    torch.multiprocessing.spawn(finetune, args=(args,), nprocs=args.world_size)
+    torch.multiprocessing.spawn(finetune, args=(args,), nprocs=args.world_size) 

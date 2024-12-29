@@ -1,9 +1,11 @@
 import abc
 
 import torch
+from src.args import parse_arguments
+from src.linearize import LinearizedModel
+from transformers import GPT2LMHeadModel, AutoModelForSequenceClassification, AutoModelForTokenClassification
 
-from src.linearize import LinearizedImageEncoder
-
+args = parse_arguments()
 
 class _TaskVector(abc.ABC):
     def __init__(
@@ -22,26 +24,47 @@ class _TaskVector(abc.ABC):
                 pretrained_checkpoint is not None and finetuned_checkpoint is not None
             )
             with torch.no_grad():
-                pretrained_state_dict = self._load_checkpoint(
-                    pretrained_checkpoint
-                ).state_dict()
-                finetuned_state_dict = self._load_checkpoint(
-                    finetuned_checkpoint
-                ).state_dict()
+                pretrained_state_dict = self._load_checkpoint(pretrained_checkpoint).state_dict()
+                finetuned_state_dict = self._load_checkpoint(finetuned_checkpoint).state_dict()
                 self.vector = {}
                 for key in pretrained_state_dict:
                     if pretrained_state_dict[key].dtype == torch.int64:
                         continue
                     if pretrained_state_dict[key].dtype == torch.uint8:
                         continue
-                    self.vector[key] = (
-                        finetuned_state_dict[key] - pretrained_state_dict[key]
-                    )
+                    self.vector[key] = (finetuned_state_dict[key] - pretrained_state_dict[key])
 
     @abc.abstractmethod
-    def _load_checkpoint(self, checkpoint):
-        """Load a checkpoint into a model."""
-        raise NotImplementedError
+    def _load_checkpoint(self, checkpoint_path):
+        """
+        Load a checkpoint into the model.
+        If the checkpoint is an OrderedDict, it returns the state dict.
+        If the checkpoint contains additional information (e.g., optimizer state),
+        it extracts the 'state_dict' key.
+        """
+        if args.task == "classification":
+            # print("Loading classification model.")
+            model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        elif args.task == "ner":
+            # print("Loading token classification model for NER.")
+            model = AutoModelForTokenClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        else:
+            # print("Loading GPT-2 model for summarization.")
+            model = GPT2LMHeadModel.from_pretrained(args.model)
+        
+        # model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
+        model = torch.load(checkpoint_path, map_location=torch.device('cpu'))
+        return model
+
+        # checkpoint = torch.load(checkpoint_path)
+
+        # If the checkpoint contains a 'state_dict', extract it
+        # if isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
+        #     return checkpoint['state_dict']
+        # else:
+        #     return checkpoint  # Return as is if it's already an OrderedDict
+        # """Load a checkpoint into a model."""
+        # raise NotImplementedError
 
     @abc.abstractmethod
     def _cast_to_same_type(self, other):
@@ -114,6 +137,7 @@ class _TaskVector(abc.ABC):
             pretrained_model = self._load_checkpoint(pretrained_checkpoint)
             new_state_dict = {}
             pretrained_state_dict = pretrained_model.state_dict()
+            # pretrained_state_dict = pretrained_model
             for key in pretrained_state_dict:
                 if key not in self.vector:
                     print(
@@ -153,7 +177,7 @@ class LinearizedTaskVector(_TaskVector):
 
     def _load_checkpoint(self, checkpoint):
         """Load a checkpoint into a model."""
-        return LinearizedImageEncoder.load(checkpoint)
+        return LinearizedModel.load(checkpoint)
 
     def apply_to_nonlinear(
         self, pretrained_nonlinear_checkpoint, param_names, scaling_coef=1.0

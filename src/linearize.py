@@ -51,11 +51,14 @@ class LinearizedModel(nn.Module):
             (tuple(dparams),),
         )
 
-        print("out.logits.shape", out.logits.shape)
-        print("dp.logits.shape", dp.logits.shape)
+        # print("out.logits.shape", out.logits.shape)
+        # print("dp.logits.shape", dp.logits.shape)
         if out.hidden_states: print(out.hidden_states.shape)
 
-        return out.logits #+dp
+        # out.logits = out.logits[:, :128, :]
+        # dp.logits = dp.logits[:, :128, :]
+
+        return out.logits + dp.logits #+dp
 
 class LinearizedLM(nn.Module):
     """Creates a linearized version of a language model (e.g., GPT-2)."""
@@ -63,11 +66,11 @@ class LinearizedLM(nn.Module):
         super().__init__()
         
         # Load models
-        self.model = AutoModelForCausalLM.from_pretrained(model_name)
+        self.model = AutoModelForCausalLM.from_pretrained("gpt2")
         if init_model_name:
             self.init_model = AutoModelForCausalLM.from_pretrained(init_model_name)
         else:
-            self.init_model = AutoModelForCausalLM.from_pretrained(model_name)
+            self.init_model = AutoModelForCausalLM.from_pretrained("gpt2")
 
         # Create linearized model
         self.linearized_model = LinearizedModel(
@@ -81,14 +84,15 @@ class LinearizedLM(nn.Module):
             "attention_mask": attention_mask,
         }
         outputs = self.linearized_model(inputs)
+        # outputs = self.linearized_model(input_ids)
 
-        print("Labels", labels)
-        print("\n")
+        # print("Labels", labels)
+        # print("\n")
 
-        print("Outputs", outputs)
+        # print("Outputs", outputs)
 
-        print("Labels shape", labels.shape)
-        print("Outputs shape", outputs.shape)
+        # print("Labels shape", labels.shape)
+        # print("Outputs shape", outputs.shape)
 
         # If labels are provided, compute loss
         if labels is not None:
