@@ -2,7 +2,7 @@ import abc
 
 import torch
 from src.args import parse_arguments
-from src.linearize import LinearizedModel
+from src.linearize import LinearizedModel, LinearizedLM
 from transformers import GPT2LMHeadModel, AutoModelForSequenceClassification, AutoModelForTokenClassification
 
 args = parse_arguments()
@@ -28,6 +28,10 @@ class _TaskVector(abc.ABC):
                 finetuned_state_dict = self._load_checkpoint(finetuned_checkpoint).state_dict()
                 self.vector = {}
                 for key in pretrained_state_dict:
+                    if "params" in key:
+                        # If 'params0' is in the key, skip it (CONCERNS ONLY LINEARIZED MODEL)
+                        if "params0" in key:
+                            continue
                     if pretrained_state_dict[key].dtype == torch.int64:
                         continue
                     if pretrained_state_dict[key].dtype == torch.uint8:
@@ -43,16 +47,13 @@ class _TaskVector(abc.ABC):
         it extracts the 'state_dict' key.
         """
         if args.task == "classification":
-            # print("Loading classification model.")
             model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=args.num_labels)
         elif args.task == "ner":
-            # print("Loading token classification model for NER.")
             model = AutoModelForTokenClassification.from_pretrained(args.model, num_labels=args.num_labels)
         else:
-            # print("Loading GPT-2 model for summarization.")
             model = GPT2LMHeadModel.from_pretrained(args.model)
         
-        # model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
+        print("task vector load checkpoint line 57")
         model = torch.load(checkpoint_path, map_location=torch.device('cpu'))
         return model
 
@@ -156,6 +157,7 @@ class NonLinearTaskVector(_TaskVector):
 
     def _load_checkpoint(self, checkpoint):
         """Load a checkpoint into a model."""
+        print("non linear task vector line 162")
         return torch.load(checkpoint, map_location="cpu")
 
     def apply_to_nonlinear(self, pretrained_nonlinear_checkpoint, scaling_coef=1.0):
@@ -175,9 +177,29 @@ class NonLinearTaskVector(_TaskVector):
 class LinearizedTaskVector(_TaskVector):
     """A task vector for linearized models."""
 
-    def _load_checkpoint(self, checkpoint):
-        """Load a checkpoint into a model."""
-        return LinearizedModel.load(checkpoint)
+    print("Inside LinearizedTaskVector")
+
+    def _load_checkpoint(self, checkpoint_path):
+        """
+        Load a checkpoint into the model.
+        If the checkpoint is an OrderedDict, it returns the state dict.
+        If the checkpoint contains additional information (e.g., optimizer state),
+        it extracts the 'state_dict' key.
+        """
+        if args.task == "classification":
+            # print("Loading classification model.")
+            model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        elif args.task == "ner":
+            # print("Loading token classification model for NER.")
+            model = AutoModelForTokenClassification.from_pretrained(args.model, num_labels=args.num_labels)
+        else:
+            # print("Loading GPT-2 model for summarization.")
+            model = GPT2LMHeadModel.from_pretrained(args.model)
+        
+        lm_model = LinearizedModel.load(checkpoint_path, model)
+        return lm_model
+        # """Load a checkpoint into a model."""
+        # return LinearizedModel.load(checkpoint)
 
     def apply_to_nonlinear(
         self, pretrained_nonlinear_checkpoint, param_names, scaling_coef=1.0

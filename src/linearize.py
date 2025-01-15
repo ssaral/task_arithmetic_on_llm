@@ -23,7 +23,6 @@ class LinearizedModel(nn.Module):
         func0, params0, self.buffers0 = make_functional_with_buffers(
             init_model.eval(), disable_autograd_tracking=True
         )
-        # self.func0 = lambda params, x: func0(params, self.buffers0, **x)
         self.func0 = lambda params, x: func0(params, self.buffers0, x)
 
         _, params, _ = make_functional_with_buffers(
@@ -51,78 +50,98 @@ class LinearizedModel(nn.Module):
             (tuple(dparams),),
         )
 
-        # print("out.logits.shape", out.logits.shape)
-        # print("dp.logits.shape", dp.logits.shape)
-        if out.hidden_states: print(out.hidden_states.shape)
-
-        # out.logits = out.logits[:, :128, :]
-        # dp.logits = dp.logits[:, :128, :]
-
-        return out.logits + dp.logits #+dp
-
-class LinearizedLM(nn.Module):
-    """Creates a linearized version of a language model (e.g., GPT-2)."""
-    def __init__(self, model_name="gpt2", init_model_name=None):
-        super().__init__()
-        
-        # Load models
-        self.model = AutoModelForCausalLM.from_pretrained("gpt2")
-        if init_model_name:
-            self.init_model = AutoModelForCausalLM.from_pretrained(init_model_name)
-        else:
-            self.init_model = AutoModelForCausalLM.from_pretrained("gpt2")
-
-        # Create linearized model
-        self.linearized_model = LinearizedModel(
-            model=self.model, init_model=self.init_model
-        )
-
-    def forward(self, input_ids, attention_mask=None, labels=None):
-        """Forward pass through the linearized language model."""
-        inputs = {
-            "input_ids": input_ids,
-            "attention_mask": attention_mask,
-        }
-        outputs = self.linearized_model(inputs)
-        # outputs = self.linearized_model(input_ids)
-
-        # print("Labels", labels)
-        # print("\n")
-
-        # print("Outputs", outputs)
-
-        # print("Labels shape", labels.shape)
-        # print("Outputs shape", outputs.shape)
-
-        # If labels are provided, compute loss
-        if labels is not None:
-            loss_fct = nn.CrossEntropyLoss()
-            shift_logits = outputs[..., 1:].contiguous()
-            shift_labels = labels[..., 1:].contiguous()
-            loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
-            return loss
-
-        return outputs
-
-    def save(self, filename):
-        """Saves the linearized language model."""
-        if os.path.dirname(filename) != "":
-            os.makedirs(os.path.dirname(filename), exist_ok=True)
-
-        state_dict = self.state_dict()
-        state_dict["model_name"] = self.model.name_or_path
-        torch.save(state_dict, filename)
-
+        return out.logits + dp.logits
+    
     @classmethod
-    def load(cls, filename):
+    def load(cls, filename, model):
         """Loads a linearized language model."""
+
         print(f"Loading language model from {filename}")
         state_dict = torch.load(filename, map_location="cpu")
 
         # Extract model name and initialize the model
-        model_name = state_dict.pop("model_name")
-        linearized_lm = cls(model_name=model_name)
+        linearized_lm = cls(model)
 
         # Load state dict
         linearized_lm.load_state_dict(state_dict)
         return linearized_lm
+
+class LinearizedLM(nn.Module):
+    """Creates a linearized version of a language model (e.g., GPT-2)."""
+    # def __init__(self, model):#, init_model_name=None):
+    #     super().__init__()
+        
+    #     # Load models
+    #     # self.model = AutoModelForCausalLM.from_pretrained(model_name)
+    #     # if init_model_name:
+    #     #     self.init_model = AutoModelForCausalLM.from_pretrained(init_model_name)
+    #     # else:
+    #     #     self.init_model = AutoModelForCausalLM.from_pretrained(model_name)
+
+    #     # Create linearized model
+    #     # self.linearized_model = LinearizedModel(model=self.model, init_model=self.init_model)
+    #     self.linearized_model = LinearizedModel(model)
+    def __init__(self, model: nn.Module, init_model: nn.Module = None) -> None:
+        super().__init__()
+        if init_model is None:
+            init_model = model
+
+        lm = LinearizedModel(model)
+        self.linearized_model = lm
+        # print(model.state_dict().keys())
+        
+
+    # def forward(self, input_ids, attention_mask=None, labels=None):
+    #     """Forward pass through the linearized language model."""
+    #     inputs = {
+    #         "input_ids": input_ids,
+    #         "attention_mask": attention_mask,
+    #     }
+    #     outputs = self.linearized_model(inputs)
+    #     # outputs = self.linearized_model(input_ids)
+
+    #     print("Labels", labels)
+    #     print("\n")
+
+    #     print("Outputs", outputs)
+
+    #     # print("Labels shape", labels.shape)
+    #     print("Outputs shape", outputs.shape)
+
+    #     # If labels are provided, compute loss
+    #     if labels is not None:
+    #         loss_fct = nn.CrossEntropyLoss()
+    #         shift_logits = outputs[..., 1:].contiguous()
+    #         shift_labels = labels[..., 1:].contiguous()
+    #         loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
+    #         return loss
+
+    #     return outputs
+
+
+    # @classmethod
+    # def load(cls, filename, model):
+    #     """Loads a linearized language model."""
+    #     # print(f"Loading language model from {filename}")
+    #     # state_dict = torch.load(filename, map_location="cpu")
+
+    #     # # Extract model name and initialize the model
+    #     print("Model is set to GPT2. Please change the model name in linearize.py (line 137). This manual intervention will be resolved.")
+    #     # model_name = "gpt2"
+    #     # linearized_lm = cls(model_name=model_name)
+
+    #     # # Load state dict
+    #     # linearized_lm.load_state_dict(state_dict)
+    #     # return linearized_lm
+    
+    #     print(f"Loading language model from {filename}")
+    #     state_dict = torch.load(filename, map_location="cpu")
+    #     print("State dicts loaded")
+    #     print("linearizing the model")
+    #     # Extract model name and initialize the model
+    #     linearized_lm = cls(model)
+
+    #     print("load state dict")
+    #     # Load state dict
+    #     linearized_lm.load_state_dict(state_dict)
+    #     return linearized_lm

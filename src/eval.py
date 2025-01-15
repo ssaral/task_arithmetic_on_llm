@@ -4,6 +4,10 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from datasets import load_dataset
 import json
 import numpy as np
+from src.linearize import LinearizedLM
+from src.eval import eval_single_dataset
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, GPT2Tokenizer
+
 
 def eval_single_dataset(model, tokenizer, dataset_name, split, args):
     """
@@ -20,7 +24,6 @@ def eval_single_dataset(model, tokenizer, dataset_name, split, args):
     """
     # Load the dataset
     dataset = load_dataset("glue", dataset_name, split=split)
-    # dataset = load_dataset("glue", dataset_name, split="test")
     
     # Tokenize the dataset
     def preprocess_function(examples):
@@ -52,7 +55,7 @@ def eval_single_dataset(model, tokenizer, dataset_name, split, args):
             labels = batch["label"].to(device)
 
             # Forward pass
-            outputs = model(inputs, attention_mask=attention_mask)
+            outputs = model(inputs)#, attention_mask=attention_mask)
             predictions = outputs.logits.argmax(dim=-1)
 
             # Calculate accuracy
@@ -62,95 +65,75 @@ def eval_single_dataset(model, tokenizer, dataset_name, split, args):
     accuracy = correct / total
     return {"accuracy": accuracy}
 
+def evaluate(model, args):
+    if args.eval_datasets is None:
+        return
+    per_dataset_results = {}
+    eval_datasets = (
+        args.eval_datasets
+        if args.control_dataset is None
+        else args.eval_datasets + [args.control_dataset]
+    )
+    
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
+    tokenizer.pad_token = tokenizer.eos_token
 
-# def eval_pipeline(task_list, args):
-#     """
-#     Evaluation pipeline for text-based models.
+    for dataset_name in eval_datasets:
+        print("Evaluating on", dataset_name)
 
-#     Args:
-#         task_list (list): List of tasks to evaluate on.
-#         args: Arguments containing evaluation configurations.
+        for split in ["test", "validation"]:
+            results = eval_single_dataset(model, tokenizer, dataset_name, split, args)
+            print(f"{dataset_name} Top-1 accuracy: {results['accuracy']:.4f}")
+            per_dataset_results[dataset_name + ":top1"] = results["accuracy"]
 
-#     Returns:
-#         None
-#     """
-#     accuracies = {}
+    return per_dataset_results
 
-#     print("*" * 100)
-#     if args.finetuning_mode == "none":
-#         print("Evaluating pretrained models.")
-#     elif args.finetuning_mode == "standard":
-#         print("Evaluating non-linear FT models.")
-#     elif args.finetuning_mode == "linear":
-#         print("Evaluating linear FT models.")
-#     elif args.finetuning_mode == "posthoc":
-#         print("Evaluating post-hoc linearized models.")
+def evaluate_task_vector_at_coef(
+    task_vector, pretrained_checkpoint, args, scaling_coef, posthoc_linearization=False
+):
+    model = task_vector.apply_to(
+        pretrained_checkpoint, scaling_coef=scaling_coef
+    )
+    if posthoc_linearization:
+        pretrained_model = task_vector.apply_to(
+            pretrained_checkpoint, scaling_coef=0.0
+        )
+        model = LinearizedLM(
+            init_model=pretrained_model, model=model, args=args
+        )
+    coef_info = evaluate(model, args)
 
-#     # Iterate over each task
-#     for task in task_list:
-#         print("*" * 100)
-#         print(f"Evaluating on {task}")
+    coef_info = add_normalized_accuracy(coef_info, args)
+    coef_info["avg_normalized_top1"] = np.mean(
+        [coef_info[dataset + ":normalized_top1"] for dataset in args.eval_datasets]
+    )
+    coef_info["avg_top1"] = np.mean(
+        [coef_info[dataset + ":top1"] for dataset in args.eval_datasets]
+    )
 
-#         pretrained_checkpoint = f"{args.save}/{task}/zeroshot.pt"
-#         finetuned_checkpoint = (
-#             f"{args.save}/{task}/linear_finetuned.pt"
-#             if args.finetuning_mode == "linear"
-#             else f"{args.save}/{task}/finetuned.pt"
-#         )
+    return coef_info
 
-#         # Load task vector
-#         try:
-#             task_vector = (
-#                 LinearizedTaskVector(pretrained_checkpoint, finetuned_checkpoint)
-#                 if args.finetuning_mode == "linear"
-#                 else NonLinearTaskVector(pretrained_checkpoint, finetuned_checkpoint)
-#             )
-#         except FileNotFoundError:
-#             print(f"Error: Could not find {finetuned_checkpoint}.")
-#             continue
+def evaluate_task_vector(
+    task_vector, pretrained_checkpoint, args, posthoc_linearization=False
+):
+    info = {}
+    for scaling_coef in np.linspace(0.0, 1.0, args.n_eval_points):
+        print(f"Evaluating for scaling coefficient {scaling_coef:.2f}")
+        info[scaling_coef] = evaluate_task_vector_at_coef(
+            task_vector,
+            pretrained_checkpoint,
+            args,
+            scaling_coef,
+            posthoc_linearization,
+        )
 
-#         # Prepare the model
-#         if args.finetuning_mode == "none":
-#             text_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
-#         elif args.finetuning_mode in ["standard", "linear"]:
-#             text_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
-#         elif args.finetuning_mode == "posthoc":
-#             zs_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
-#             ft_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
-#             text_model = LinearizedLM(init_model=zs_model, lm_model=ft_model, args=args)
+    return info
 
-#         # Load tokenizer
-#         tokenizer = AutoTokenizer.from_pretrained(args.model)
+def add_normalized_accuracy(results, args):
+    for dataset_name in args.eval_datasets:
+        results[dataset_name + ":normalized_top1"] = (
+            results[dataset_name + ":top1"] / args.finetuning_accuracies[dataset_name]
+        )
 
-#         # Evaluate
-#         accuracies[task] = eval_single_dataset(text_model, tokenizer, task, args)["accuracy"]
-
-#     # Save results
-#     if args.finetuning_mode == "none":
-#         save_path = f"{args.save}/zeroshot_accuracies.json"
-#     elif args.finetuning_mode == "standard":
-#         save_path = f"{args.save}/ft_accuracies.json"
-#     elif args.finetuning_mode == "linear":
-#         save_path = f"{args.save}/linear_ft_accuracies.json"
-#     elif args.finetuning_mode == "posthoc":
-#         save_path = f"{args.save}/posthoc_ft_accuracies.json"
-
-#     with open(save_path, "w") as f:
-#         json.dump(accuracies, f)
-
-#     print(f"Results saved to {save_path}")
-
-
-# if __name__ == "__main__":
-#     from src.args import parse_arguments
-#     from src.task_vectors import LinearizedTaskVector, NonLinearTaskVector
-#     from src.linearize import LinearizedLM
-
-#     # Parse arguments
-#     args = parse_arguments()
-
-#     # Define tasks for evaluation
-#     tasks = ["sst2", "mnli", "qnli", "cola"]  # Example GLUE tasks
-
-#     # Run evaluation pipeline
-#     eval_pipeline(tasks, args)
+    return results

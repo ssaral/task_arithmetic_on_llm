@@ -130,6 +130,25 @@ def parse_arguments():
         type=int, 
         help="Max length according to task",
     )
+    parser.add_argument(
+        "--task", 
+        type=str, 
+        choices=["summarization", "classification", "ner"], 
+        required=True, 
+        help="Task type"
+    )
+    parser.add_argument(
+        "--data-task", 
+        type=str, 
+        default="", 
+        help="Dataset name of the task. Will be used in saving checkpoints with proper naming convention."
+    )
+    parser.add_argument(
+        "--num-labels", 
+        type=int, 
+        default=2, 
+        help="Number of labels for classification or NER tasks"
+    )
     parsed_args = parser.parse_args()
     parsed_args.device = "cuda" if torch.cuda.is_available() else "cpu"
 

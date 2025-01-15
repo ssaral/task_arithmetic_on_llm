@@ -1,5 +1,6 @@
 import json
 import torch
+import os
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, GPT2Tokenizer
 from src.args import parse_arguments
 from src.eval import eval_single_dataset
@@ -10,11 +11,13 @@ from src.linearize import LinearizedLM, LinearizedModel
 # Parse arguments
 args = parse_arguments()
 
+ckpdir = args.model + "_" + args.finetuning_mode + "_" + args.task + "_" + args.data_task
+
 # Define checkpoint save path
 if args.seed is not None:
-    args.save = f"checkpoints_{args.seed}/{args.model}"
+    args.save = f"checkpoints_{args.seed}/{ckpdir}"
 else:
-    args.save = f"checkpoints/{args.model}"
+    args.save = f"checkpoints/{ckpdir}"
 
 # Initialize results dictionary
 accuracies = {}
@@ -36,7 +39,11 @@ for task in ["sst2", "qnli", "cola"]: #, "mnli_matched"]:
     print(f"Evaluating on {task}")
 
     # Define paths for pretrained and finetuned checkpoints
-    pretrained_checkpoint = f"{args.save}/zeroshot_full_model.pt"
+    pretrained_checkpoint = (
+        f"{args.save}/linear_zeroshot.pt"
+        if args.finetuning_mode == "linear"
+        else f"{args.save}/zeroshot_full_model.pt"
+    )
     finetuned_checkpoint = (
         f"{args.save}/linear_finetuned.pt"
         if args.finetuning_mode == "linear"
@@ -62,11 +69,11 @@ for task in ["sst2", "qnli", "cola"]: #, "mnli_matched"]:
     elif args.finetuning_mode == "posthoc":
         zs_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=0.0)
         ft_model = task_vector.apply_to(pretrained_checkpoint, scaling_coef=1.0)
-        text_model = LinearizedModel(init_model=zs_model, lm_model=ft_model, args=args)
+        text_model = LinearizedModel(init_model=zs_model, model=ft_model)
+        # text_model = LinearizedModel(init_model=zs_model, lm_model=ft_model, args=args)
 
     # Load tokenizer
-    # tokenizer = AutoTokenizer.from_pretrained(args.model)
-    tokenizer = GPT2Tokenizer.from_pretrained(args.model)
+    tokenizer = AutoTokenizer.from_pretrained(args.model)
     tokenizer.pad_token = tokenizer.eos_token
 
 
