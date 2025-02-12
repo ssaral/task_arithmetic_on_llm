@@ -85,8 +85,7 @@ def finetune(rank, args):
     if is_main_process():
         if args.finetuning_mode == "linear":
             zs_path = os.path.join(ckpdir, "linear_zeroshot.pt")
-            torch.save(ddp_model.module, zs_path)
-            # torch.save(ddp_model.module.state_dict(), zs_path)
+            torch.save(ddp_model.module.state_dict(), zs_path)
         else:
             zs_path = os.path.join(ckpdir, "zeroshot_full_model.pt")
             torch.save(ddp_model.module, zs_path)
@@ -146,19 +145,28 @@ def finetune(rank, args):
             if step % args.checkpoint_every == 0 and is_main_process():
                 if args.finetuning_mode == "linear":
                     ft_path = os.path.join(ckpdir, f"checkpoint_{epoch}_{step}.pt")
-                    torch.save(ddp_model.module, ft_path)
-                    # torch.save(ddp_model.module.state_dict(), ft_path)
+                    torch.save(ddp_model.module.state_dict(), ft_path)
                 else:
                     ft_path = os.path.join(ckpdir, f"checkpoint_full_model_{epoch}_{step}.pt")
                     torch.save(ddp_model.module, ft_path)
                 
                 # wandb.save(ft_path)
+        
+        # To save model only after an epoch is completed. Give args --checkpoint_every = 1
+        # if epoch % args.checkpoint_every == 0:
+        #     if args.finetuning_mode == "linear":
+        #         ft_path = os.path.join(ckpdir, f"epoch_checkpoint_{epoch}_{step}.pt")
+        #         # torch.save(ddp_model.module, ft_path)
+        #         torch.save(ddp_model.module.state_dict(), ft_path)
+        #     else:
+        #         ft_path = os.path.join(ckpdir, f"epoch_checkpoint_full_model_{epoch}_{step}.pt")
+        #         torch.save(ddp_model.module, ft_path)
 
     # Save final finetuned model
     if is_main_process():
         if args.finetuning_mode == "linear":
             ft_path = os.path.join(ckpdir, "linear_finetuned.pt")
-            torch.save(ddp_model.module, ft_path)
+            torch.save(ddp_model.module.state_dict(), ft_path)
             # torch.save(ddp_model.module.state_dict(), ft_path)
         else:
             ft_path = os.path.join(ckpdir, "finetuned_full_model.pt")
