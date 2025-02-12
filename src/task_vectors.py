@@ -46,26 +46,9 @@ class _TaskVector(abc.ABC):
         If the checkpoint contains additional information (e.g., optimizer state),
         it extracts the 'state_dict' key.
         """
-        if args.task == "classification":
-            model = AutoModelForSequenceClassification.from_pretrained(args.model, num_labels=args.num_labels)
-        elif args.task == "ner":
-            model = AutoModelForTokenClassification.from_pretrained(args.model, num_labels=args.num_labels)
-        else:
-            model = GPT2LMHeadModel.from_pretrained(args.model)
         
-        print("task vector load checkpoint line 57")
         model = torch.load(checkpoint_path, map_location=torch.device('cpu'))
         return model
-
-        # checkpoint = torch.load(checkpoint_path)
-
-        # If the checkpoint contains a 'state_dict', extract it
-        # if isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
-        #     return checkpoint['state_dict']
-        # else:
-        #     return checkpoint  # Return as is if it's already an OrderedDict
-        # """Load a checkpoint into a model."""
-        # raise NotImplementedError
 
     @abc.abstractmethod
     def _cast_to_same_type(self, other):
